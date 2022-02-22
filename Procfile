@@ -1,0 +1,1 @@
+web sh -c 'echo ${FIREBASE_ADMIN_KEY} >> /home/ubuntu/firebase.json && java -Dserver.port=$PORT $JAVA_OPTS -Dspring.profiles.active=main -jar target/heroku-sample-0.0.1-SNAPSHOT.jar'
