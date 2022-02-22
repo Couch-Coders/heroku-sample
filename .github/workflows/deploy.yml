@@ -1,0 +1,34 @@
+# main 브랜치에 push시 동작한다
+on:
+  push:
+    branches: [main, develop]
+    
+jobs:
+  build:
+    # 해당 동작들을 돌릴 OS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          
+      # node 설치
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+     
+      # checkout 하기
+      # backend
+      - name: checkout backend
+        uses: actions/checkout@v2
+      
+      # heroku에 배포하기
+      - name: deploy to heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "couchcoding-heroku" #
+          heroku_email: "couchcoding.help@gmail.com"
+          
