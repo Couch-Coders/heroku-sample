@@ -10,7 +10,10 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
+@Slf4j
 public class FirebaseConfig {
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
@@ -20,7 +23,9 @@ public class FirebaseConfig {
         FirebaseOptions options = new FirebaseOptions.Builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         .build();
-
-        return FirebaseApp.initializeApp(options);
+        
+        FirebaseApp app = FirebaseApp.initializeApp(options);
+        log.info("FirebaseApp initialized" + app.getName());
+        return app;
     }
 }
