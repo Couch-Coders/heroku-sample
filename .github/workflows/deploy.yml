@@ -22,7 +22,7 @@ jobs:
       # checkout 하기
       # backend
       - name: checkout backend
-        uses: actions/checkout@v2
+        uses: actions/checkout@v
       
       # heroku에 배포하기
       - name: deploy to heroku
