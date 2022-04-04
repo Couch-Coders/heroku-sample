@@ -17,7 +17,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-          
      
       # checkout 하기
       # backend
