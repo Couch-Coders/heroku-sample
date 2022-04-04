@@ -1,4 +1,4 @@
-package com.example.herokusample.security;
+package com.example.herokusample.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
