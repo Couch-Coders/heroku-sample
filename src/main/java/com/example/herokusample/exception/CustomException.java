@@ -1,6 +1,5 @@
 package com.example.herokusample.exception;
 
-package couch.camping.exception;
 
 import lombok.Getter;
 
