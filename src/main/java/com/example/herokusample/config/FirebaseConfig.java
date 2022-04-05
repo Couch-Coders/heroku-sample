@@ -4,9 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.cloud.StorageClient;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,7 @@ public class FirebaseConfig {
 
         FirebaseOptions options = new FirebaseOptions.Builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+        .setStorageBucket("heroku-sample.appspot.com")
         .build();
         
         FirebaseApp app = FirebaseApp.initializeApp(options);
@@ -34,5 +37,10 @@ public class FirebaseConfig {
     @Bean 
     public FirebaseAuth firebaseAuth() throws IOException {
         return FirebaseAuth.getInstance(firebaseApp());
+    }
+
+    @Bean
+    public Bucket bucket() throws IOException {
+        return StorageClient.getInstance(firebaseApp()).bucket();
     }
 }
