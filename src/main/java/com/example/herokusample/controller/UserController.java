@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -22,13 +26,17 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @RequestMapping("/users")
 @RestController
+@Slf4j
 public class UserController {
-    @Value("${spring.profiles.active}")
     private String activeProfile;
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(UserService userService,
+                         Environment environments) {
         this.userService = userService;
+        this.activeProfile = environments.getActiveProfiles()[0];
+        log.info("activeProfile: {}", activeProfile);
     }
     
     @GetMapping("/me")
@@ -51,11 +59,12 @@ public class UserController {
     public User updateProfile(@RequestParam MultipartFile image,
                               Authentication authentication) {
         User user = (User) authentication.getPrincipal();
+        log.info("user: {}", user);
         return userService.updateProfile(user, image);
     }
 
     @GetMapping("/{uid}/profile")
-    public byte[] downloadProfile(@RequestParam String uid) {
+    public byte[] downloadProfile(@PathVariable String uid) {
         return userService.getProfile(uid);
     }
 }

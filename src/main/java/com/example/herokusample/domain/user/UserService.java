@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService{
 
     @Transactional
     public User signupMock(SignupDTO signupDTO, String token) {
-        User user = User.builder().uid(token).name(signupDTO.getUsername()).build();
+        User user = User.builder().uid(token).name(signupDTO.getName()).build();
         userRepository.save(user);
         return user;
     }
@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService{
         if(userRepository.findById(uid).isPresent()) {
             throw new CustomException(ErrorCode.EXIST_MEMBER);
         }
-        User user = User.builder().uid(uid).name(signupDTO.getUsername()).build();
+        User user = User.builder().uid(uid).name(signupDTO.getName()).build();
         userRepository.save(user);
         return user;
     }
@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService{
     public User updateProfile(User user, MultipartFile image) {
         String blob = "profile/" + user.getUid();
         try {
-            if(bucket.get(blob).exists()) {
+            if(bucket.get(blob) != null) {
                 bucket.get(blob).delete();
             }
             bucket.create(blob, image.getBytes());

@@ -36,6 +36,7 @@ public class SecurityConfigBase extends WebSecurityConfigurerAdapter{
         //인증 예외 URL 설정
         web.ignoring()
             .antMatchers(HttpMethod.GET ,"/")
+            .antMatchers(HttpMethod.POST, "/users")
             .antMatchers("/css/**")
             .antMatchers("/static/**")
             .antMatchers("/js/**")
