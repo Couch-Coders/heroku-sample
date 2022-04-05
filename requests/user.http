@@ -1,0 +1,29 @@
+### Signup
+POST http://localhost:8080/users
+Content-Type: application/json
+Authorization: Bearer test
+
+{
+  "name": "John"
+}
+
+### Login
+GET http://localhost:8080/users/me
+Content-Type: application/json
+Authorization: Bearer test
+
+### Upload Profile Picture
+POST http://localhost:8080/users/me/profile
+Authorization: Bearer test
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="test.png"
+Content-Type: image/png
+
+< ./test.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get Profile Picture
+GET http://localhost:8080/users/test/profile
+Authorization: Bearer test
