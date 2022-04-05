@@ -6,7 +6,9 @@ import com.example.herokusample.util.RequestUtil;
 import com.google.api.client.util.Value;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 
@@ -43,5 +45,17 @@ public class UserController {
         } else {
             return userService.signup(signupDTO, token);
         }
+    }
+
+    @PostMapping("/me/profile")
+    public User updateProfile(@RequestParam MultipartFile image,
+                              Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return userService.updateProfile(user, image);
+    }
+
+    @GetMapping("/{uid}/profile")
+    public byte[] downloadProfile(@RequestParam String uid) {
+        return userService.getProfile(uid);
     }
 }

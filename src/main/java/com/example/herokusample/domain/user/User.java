@@ -17,6 +17,7 @@ public class User implements UserDetails {
     @Id
     private String uid;
     private String name;
+    private String profile;
 
     @Builder
     public User(String uid, String name) {
@@ -64,5 +65,9 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    public void updateProfile(String blob) {
+        this.profile = blob;
     }
 }
